@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <h1 class="logo">SocialMedia</h1>
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search people..." class="search-input">
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="nav-icons">
+                    <button class="nav-icon" id="homeBtn" title="Home">
+                        <i class="fas fa-home"></i>
+                    </button>
+                    <button class="nav-icon" id="profileBtn" title="Profile">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <button class="nav-icon" id="friendsBtn" title="Friends">
+                        <i class="fas fa-users"></i>
+                    </button>
+                    <button class="nav-icon" id="messagesBtn" title="Messages">
+                        <i class="fas fa-envelope"></i>
+                        <span class="notification-badge" id="messageBadge" style="display: none;">0</span>
+                    </button>
+                    <button class="nav-icon" id="notificationsBtn" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                    </button>
+                </div>
+                <div class="user-menu">
+                    <img id="userAvatar" src="https://via.placeholder.com/40" alt="Avatar" class="user-avatar">
+                    <div class="dropdown-menu">
+                        <button id="logoutBtn" class="dropdown-item">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Login/Register Form -->
+        <div id="authContainer" class="auth-container">
+            <div class="auth-box">
+                <h2>Welcome to SocialMedia</h2>
+                <p>Connect with friends and share your life</p>
+                
+                <div class="auth-tabs">
+                    <button class="auth-tab active" id="loginTab">Login</button>
+                    <button class="auth-tab" id="registerTab">Register</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <input type="email" id="loginEmail" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="auth-button">Login</button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="auth-form" style="display: none;">
+                    <div class="form-group">
+                        <input type="text" id="registerFirstName" placeholder="First Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="registerLastName" placeholder="Last Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="registerUsername" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="registerEmail" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="registerPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="auth-button">Register</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main App (hidden initially) -->
+        <div id="appContainer" class="app-container" style="display: none;">
+            <div class="content-wrapper">
+                <!-- Left Sidebar -->
+                <aside class="sidebar left-sidebar">
+                    <div class="sidebar-section">
+                        <h3>Quick Actions</h3>
+                        <button class="sidebar-button" id="createPostBtn">
+                            <i class="fas fa-plus"></i> Create Post
+                        </button>
+                        <button class="sidebar-button" id="uploadPhotoBtn">
+                            <i class="fas fa-camera"></i> Upload Photo
+                        </button>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <h3>Your Profile</h3>
+                        <div class="profile-summary">
+                            <img id="sidebarAvatar" src="https://via.placeholder.com/60" alt="Avatar" class="profile-avatar">
+                            <div class="profile-info">
+                                <h4 id="sidebarName">Your Name</h4>
+                                <p id="sidebarUsername">@username</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Friends</h3>
+                        <div id="friendsList" class="friends-list">
+                            <!-- Friends will be loaded here -->
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Feed -->
+                <section class="main-feed">
+                    <!-- Create Post -->
+                    <div class="post-creator">
+                        <div class="post-input-container">
+                            <img id="feedAvatar" src="https://via.placeholder.com/40" alt="Avatar" class="post-avatar">
+                            <div class="post-input-wrapper">
+                                <textarea id="postContent" placeholder="What's on your mind?" class="post-input"></textarea>
+                                <div class="post-actions">
+                                    <button class="post-action-btn" id="addPhotoBtn">
+                                        <i class="fas fa-image"></i> Photo
+                                    </button>
+                                    <button class="post-action-btn" id="addLocationBtn">
+                                        <i class="fas fa-map-marker-alt"></i> Location
+                                    </button>
+                                    <select id="postPrivacy" class="post-privacy">
+                                        <option value="public">Public</option>
+                                        <option value="friends">Friends</option>
+                                        <option value="private">Private</option>
+                                    </select>
+                                    <button id="submitPostBtn" class="post-submit-btn">Post</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Posts Feed -->
+                    <div id="postsFeed" class="posts-feed">
+                        <!-- Posts will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Right Sidebar -->
+                <aside class="sidebar right-sidebar">
+                    <div class="sidebar-section">
+                        <h3>Friend Requests</h3>
+                        <div id="friendRequests" class="friend-requests">
+                            <!-- Friend requests will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Trending</h3>
+                        <div id="trendingTopics" class="trending-topics">
+                            <div class="trending-item">
+                                <span class="trending-number">#1</span>
+                                <span class="trending-text">#SocialMedia</span>
+                            </div>
+                            <div class="trending-item">
+                                <span class="trending-number">#2</span>
+                                <span class="trending-text">#Technology</span>
+                            </div>
+                            <div class="trending-item">
+                                <span class="trending-number">#3</span>
+                                <span class="trending-text">#Innovation</span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div id="createPostModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Create Post</h3>
+                    <button class="modal-close" id="closePostModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="modalPostContent" placeholder="What's on your mind?" class="modal-post-input"></textarea>
+                    <div class="modal-post-actions">
+                        <button class="modal-action-btn" id="modalAddPhotoBtn">
+                            <i class="fas fa-image"></i> Add Photo
+                        </button>
+                        <select id="modalPostPrivacy" class="modal-post-privacy">
+                            <option value="public">Public</option>
+                            <option value="friends">Friends</option>
+                            <option value="private">Private</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-cancel-btn" id="cancelPostBtn">Cancel</button>
+                    <button class="modal-submit-btn" id="submitModalPostBtn">Post</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="profileModal" class="modal" style="display: none;">
+            <div class="modal-content profile-modal">
+                <div class="modal-header">
+                    <h3>Profile</h3>
+                    <button class="modal-close" id="closeProfileModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="profile-edit-form">
+                        <div class="form-group">
+                            <label>Display Name</label>
+                            <input type="text" id="editDisplayName" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Bio</label>
+                            <textarea id="editBio" class="form-textarea" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" id="editLocation" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Website</label>
+                            <input type="url" id="editWebsite" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Privacy</label>
+                            <select id="editPrivacy" class="form-select">
+                                <option value="false">Public Profile</option>
+                                <option value="true">Private Profile</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-cancel-btn" id="cancelProfileBtn">Cancel</button>
+                    <button class="modal-submit-btn" id="saveProfileBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 
